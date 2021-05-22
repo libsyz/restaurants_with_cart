@@ -3,6 +3,9 @@ const initDynamicModal = () => {
   const modalElement = document.querySelector('#exampleModal');
 
   if (modalElement) {
+    // Using JQuery here because Bootstrap relies on it
+    // To manage events
+    // https://getbootstrap.com/docs/4.6/components/modal/#varying-modal-content
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
       var dishName = button.data('dish-name')
@@ -41,32 +44,20 @@ const initAddToCart = (button) => {
           {dishId: dishId,
            amount: amount.value,
            specialInstructions: specialInstructions.value
-          })
+         })
         window.localStorage.order = JSON.stringify(order);
         // Set this dish in the cart with the quantity
       }
     } else {
       // Start the order
       window.localStorage.order = JSON.stringify([
-          {
-            dishId: button.data('dish-id'),
-            amount: amount.value,
-            specialInstructions: specialInstructions.value
-          }
-        ])
+      {
+        dishId: button.data('dish-id'),
+        amount: amount.value,
+        specialInstructions: specialInstructions.value
+      }
+      ])
     }
-    // order: [{
-    //          dishId: ,
-    //          amount: ,
-    //          specialInstructions:
-    //        }]
-    //
-    // If I already have this dish in the cart,
-    // update the quantity
-
-    // If the dish is not in the cart,
-    // We'll add it
-
   })
 }
 
