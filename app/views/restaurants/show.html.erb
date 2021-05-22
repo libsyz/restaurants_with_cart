@@ -1,0 +1,13 @@
+<h1>Restaurants#show</h1>
+
+<% @restaurant.dishes.each do |dish| %>
+  <div class="card border shadow-sm p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center w-50">
+      <div class="dish-info">
+        <h3> <%= dish.name %> </h3>
+        <p> <%= dish.price %>  USD </p>
+      </div>
+      <button class="btn btn-primary">add to cart</button>
+    </div>
+  </div>
+<% end %>
