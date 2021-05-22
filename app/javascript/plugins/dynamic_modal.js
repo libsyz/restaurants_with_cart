@@ -14,6 +14,7 @@ const initDynamicModal = () => {
       var modal = $(this)
       modal.find('.modal-title').text('Order ' + dishName)
       modal.find('.modal-price').text(dishPrice + " USD")
+      debugger
       fillInputs(modal, dishId);
 
       initAddToCart(button);
@@ -31,6 +32,7 @@ const initAddToCart = (button) => {
     if (window.localStorage.order) {
       const order = JSON.parse(window.localStorage.order);
       const orderInCart = findInCart(order, dishId)
+      debugger
       if (orderInCart) {
         console.log('working as expected');
         orderInCart.amount = amount.value
@@ -62,13 +64,12 @@ const initAddToCart = (button) => {
 }
 
 const fillInputs = (modal, dishId) => {
-  debugger
   if (window.localStorage.order) {
     const order = JSON.parse(window.localStorage.order)
     const dishInCart = findInCart(order, dishId)
     if (dishInCart) {
       modal.find('#dish-amount').val(dishInCart.amount)
-      modal.find('#dish-special-instructions').val(dishInCart.specialInstructions);
+      modal.find('#special-instructions').val(dishInCart.specialInstructions);
     } else {
       modal.find('#dish-amount').val('')
       modal.find('#special-instructions').val('')
