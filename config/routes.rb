@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: 'restaurants#index'
   resources :restaurants, only: [:index, :show]
   resources :orders, only: [:create]
+  get '/order_success', to: 'pages#success'
   get '/cart', to: 'cart#show'
   post '/cartinfo', to: 'cart#cartinfo'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
