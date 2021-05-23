@@ -3,6 +3,7 @@ const initDynamicModal = () => {
   const modalElement = document.querySelector('#exampleModal');
 
   if (modalElement) {
+    initAddToCart();
     // Using JQuery here because Bootstrap relies on it
     // To manage events
     // https://getbootstrap.com/docs/4.6/components/modal/#varying-modal-content
@@ -17,22 +18,23 @@ const initDynamicModal = () => {
       debugger
       fillInputs(modal, dishId);
 
-      initAddToCart(button);
     })
   }
 }
 
-const initAddToCart = (button) => {
-  const dishId = button.data('dish-id');
+const initAddToCart = () => {
   const sendToCart = document.querySelector('.btn-modal');
-  const amount = document.querySelector('#dish-amount');
-  const specialInstructions = document.querySelector('#special-instructions');
+
   sendToCart.addEventListener('click', () => {
+    const modal = document.querySelector('.modal.fade');
+    const currentDishId = modal.dataset.currentDishId;
+    const specialInstructions = document.querySelector('#special-instructions');
+    const amount = document.querySelector('#dish-amount');
     // If there is an order key
+    console.log('clicking!');
     if (window.localStorage.order) {
       const order = JSON.parse(window.localStorage.order);
-      const orderInCart = findInCart(order, dishId)
-      debugger
+      const orderInCart = findInCart(order, currentDishId)
       if (orderInCart) {
         console.log('working as expected');
         orderInCart.amount = amount.value
@@ -54,7 +56,7 @@ const initAddToCart = (button) => {
       // Start the order
       window.localStorage.order = JSON.stringify([
       {
-        dishId: button.data('dish-id'),
+        dishId: currentDishId,
         amount: amount.value,
         specialInstructions: specialInstructions.value
       }
