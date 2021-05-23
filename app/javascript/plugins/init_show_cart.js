@@ -16,12 +16,12 @@ const showCart = (cartContainer) => {
     // make a post request with the current order
     // submit
     fetchWithToken("/cartinfo", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: window.localStorage.order
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: window.localStorage.order
     })
     .then((res) => res.json())
     .then((data) => {
@@ -41,20 +41,25 @@ const renderCart = (data, cartContainer) => {
   });
   cartContainer.insertAdjacentHTML('beforeend', `<p class='text-bold'> total: ${data.total} </p>`)
 
-  const form = createForm();
-  cartContainer.insertAdjacentHTML('beforeend', form);
-}
+  const createOrderBtn = document.querySelector('#submit-order');
+  createOrderBtn.classList.remove('d-none');
+  createOrderBtn.addEventListener('click', () => {
+    fetchWithToken('/orders', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+      body: window.localStorage.order
+      }).then((res) => {
+        if (res.status === 200) {
+          window.localStorage.clear();
+          window.location.href = '/order_success';
+        }
+      })
+    })
+  }
 
-
-const createForm = () => {
-  return `
-    <form method="POST" action="orders">
-      <input name="authenticity_token" type="hidden" value="${csrfToken()}">
-      <input name="order" type="hidden" value="${window.localStorage.order}">
-      <input type="submit" value="create order">
-    </form>
-  `
-}
 
 const fetchWithToken = (url, options) => {
   options.headers = {
