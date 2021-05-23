@@ -23,8 +23,10 @@ import "bootstrap";
 
 // Internal imports, e.g:
 import { initDynamicModal } from '../plugins/dynamic_modal';
+import { initShowCart } from '../plugins/init_show_cart';
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   initDynamicModal();
+  initShowCart();
 });
